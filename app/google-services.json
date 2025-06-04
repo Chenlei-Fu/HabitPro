@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "998713169159",
+    "project_id": "habittracker-claire",
+    "storage_bucket": "habittracker-claire.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998713169159:android:1d2e0aa11801e40159a1a2",
+        "android_client_info": {
+          "package_name": "com.example.habittrackerpro"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyQP3_5_U_40i6vJ2fXiwPfb-sOgeOokM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
