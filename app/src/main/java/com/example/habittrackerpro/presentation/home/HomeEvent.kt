@@ -19,4 +19,19 @@ sealed interface HomeEvent {
    * @param habit The habit that was long-pressed.
    */
   data class OnHabitLongClick(val habit: Habit) : HomeEvent
+
+  /**
+   * Event triggered when the completion checkbox of a habit is clicked.
+   * This event carries the necessary data for the ViewModel to process the update.
+   *
+   * @param habit The habit whose completion status is being changed.
+   * @param isCompleted The new completion state (true if checked, false if unchecked).
+   */
+  data class OnCompletedClick(val habit: Habit, val isCompleted: Boolean) : HomeEvent
+
+  // Triggered when the user confirms the deletion in the dialog
+  object OnDeleteHabitConfirm : HomeEvent
+
+  // Triggered when the user cancels the deletion dialog
+  object OnDeleteHabitCancel : HomeEvent
 }

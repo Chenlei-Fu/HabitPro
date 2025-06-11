@@ -10,5 +10,8 @@ import java.time.ZonedDateTime
  */
 data class HomeState(
   val currentDate: ZonedDateTime = ZonedDateTime.now(),
-  val habits: List<Habit> = emptyList()
+  val habits: List<Habit> = emptyList(),
+  // Property to hold the habit that is about to be deleted.
+  // If null, the dialog is hidden. If not null, the dialog is shown.
+  val habitToDelete: Habit? = null
 )
