@@ -40,6 +40,9 @@ class HomeViewModel @Inject constructor(
         )
       }
     }.launchIn(viewModelScope)
+
+    // Initialize the visible dates when the ViewModel is created
+    updateVisibleDates()
   }
 
   fun onEvent(event: HomeEvent) {
@@ -107,6 +110,31 @@ class HomeViewModel @Inject constructor(
       is HomeEvent.OnDeleteHabitCancel -> {
         _state.update { it.copy(habitToDelete = null) }
       }
+
+      // Handle date selection event
+      is HomeEvent.OnDateClick -> {
+        _state.update { it.copy(selectedDate = event.date) }
+        // After selecting a new date, we might want to regenerate the visible dates
+        // For now, we'll keep it simple. A more advanced implementation
+        // could slide the dates.
+        updateVisibleDates(event.date)
+      }
     }
+  }
+
+  // A helper function to generate the list of dates to display
+  private fun updateVisibleDates(newSelectedDate: ZonedDateTime = _state.value.selectedDate) {
+    val dates = mutableListOf<ZonedDateTime>()
+    // Add 3 days before the selected date
+    for (i in 3 downTo 1) {
+      dates.add(newSelectedDate.minusDays(i.toLong()))
+    }
+    // Add the selected date
+    dates.add(newSelectedDate)
+    // Add 3 days after the selected date
+    for (i in 1..3) {
+      dates.add(newSelectedDate.plusDays(i.toLong()))
+    }
+    _state.update { it.copy(visibleDates = dates) }
   }
 }

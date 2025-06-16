@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.example.habittrackerpro.data.local.entity.HabitEntity
 import kotlinx.coroutines.flow.Flow
 @Dao
@@ -20,4 +21,7 @@ interface HabitDao {
 
   @Delete
   suspend fun deleteHabit(habit: HabitEntity)
+
+  @Update
+  suspend fun updateHabit(habit: HabitEntity)
 }

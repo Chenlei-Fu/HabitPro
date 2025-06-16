@@ -30,5 +30,9 @@ class HabitRepositoryImpl @Inject constructor(
   override suspend fun deleteHabit(habit: HabitEntity) {
     habitDao.deleteHabit(habit)
   }
+
+  override suspend fun updateHabit(habit: HabitEntity) {
+    habitDao.updateHabit(habit)
+  }
 }
 

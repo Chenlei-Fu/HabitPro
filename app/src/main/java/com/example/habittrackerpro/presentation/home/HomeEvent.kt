@@ -1,5 +1,7 @@
 package com.example.habittrackerpro.presentation.home
 import com.example.habittrackerpro.domain.model.Habit
+import java.time.ZonedDateTime
+
 /**
  * Represents all possible user interactions (events) on the Home screen.
  * Using a sealed interface ensures that we can handle all possible events in a when block.
@@ -34,4 +36,7 @@ sealed interface HomeEvent {
 
   // Triggered when the user cancels the deletion dialog
   object OnDeleteHabitCancel : HomeEvent
+
+  // Event triggered when a user clicks on a date in the date selector.
+  data class OnDateClick(val date: ZonedDateTime) : HomeEvent
 }

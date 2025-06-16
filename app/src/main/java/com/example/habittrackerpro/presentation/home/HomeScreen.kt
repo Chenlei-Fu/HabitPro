@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.habittrackerpro.presentation.home.components.DateSelector
 import com.example.habittrackerpro.presentation.home.components.HabitItem
 
 /**
@@ -65,11 +66,13 @@ fun HomeScreen(
       verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
       item {
-        Text(
-          text = "Good Morning!", // This can be dynamic later
-          fontWeight = FontWeight.Bold,
-          fontSize = 28.sp,
-          modifier = Modifier.padding(bottom = 16.dp)
+        // Replace the static text with our dynamic DateSelector
+        DateSelector (
+          dates = state.visibleDates,
+          selectedDate = state.selectedDate,
+          onDateClick = {
+            viewModel.onEvent(HomeEvent.OnDateClick(it))
+          }
         )
       }
       items(state.habits) { habit ->
