@@ -19,7 +19,7 @@ class HabitRepositoryImpl @Inject constructor(
     return habitDao.getAllHabits()
   }
 
-  override suspend fun getHabitById(id: String): HabitEntity {
+  override fun getHabitById(id: String): Flow<HabitEntity?> {
     return habitDao.getHabitById(id)
   }
 

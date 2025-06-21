@@ -80,6 +80,7 @@ fun HomeScreen(
       items(state.habits) { habit ->
         HabitItem(
           habit = habit,
+          selectedDate = state.selectedDate,
           onCardClick = { onHabitClick(habit) },
           onCheckboxClick = { isCompleted ->
             viewModel.onEvent(HomeEvent.OnCompletedClick(habit, isCompleted))

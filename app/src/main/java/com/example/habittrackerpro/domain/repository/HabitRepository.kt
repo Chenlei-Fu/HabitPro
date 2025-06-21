@@ -14,7 +14,7 @@ interface HabitRepository {
   fun getAllHabits(): Flow<List<HabitEntity>>
 
   /** Retrieves a single habit by its ID. */
-  suspend fun getHabitById(id: String): HabitEntity
+  fun getHabitById(id: String): Flow<HabitEntity?>
 
   /** Inserts or updates a habit. */
   suspend fun insertHabit(habit: HabitEntity)

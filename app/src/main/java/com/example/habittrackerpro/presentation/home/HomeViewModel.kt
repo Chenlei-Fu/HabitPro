@@ -55,35 +55,32 @@ class HomeViewModel @Inject constructor(
         _state.update { it.copy(habitToDelete = event.habit) }
       }
 
-      // Handle the new completion event
       is HomeEvent.OnCompletedClick -> {
         viewModelScope.launch {
-          val habit = state.value.habits.first { it.id == event.habit.id }
-          val updatedDates = habit.completedDates.toMutableList()
-          val today = ZonedDateTime.now().toLocalDate()
+          val dateToModify = state.value.selectedDate
+
+          // 从 Flow 中获取第一个非 null 的值来进行更新
+          val currentEntity = repository.getHabitById(event.habit.id).filterNotNull().first()
+
+          val completedTimestamps = currentEntity.completedDates.toMutableList()
 
           if (event.isCompleted) {
-            // Add today's date if it doesn't exist
-            if (updatedDates.none { it.toLocalDate() == today }) {
-              updatedDates.add(ZonedDateTime.now())
+            val alreadyCompleted = completedTimestamps.any { timestamp ->
+              ZonedDateTime.ofInstant(java.time.Instant.ofEpochSecond(timestamp), java.time.ZoneId.systemDefault())
+                .toLocalDate() == dateToModify.toLocalDate()
+            }
+            if (!alreadyCompleted) {
+              completedTimestamps.add(dateToModify.toEpochSecond())
             }
           } else {
-            // Remove today's date
-            updatedDates.removeAll { it.toLocalDate() == today }
+            completedTimestamps.removeAll { timestamp ->
+              ZonedDateTime.ofInstant(java.time.Instant.ofEpochSecond(timestamp), java.time.ZoneId.systemDefault())
+                .toLocalDate() == dateToModify.toLocalDate()
+            }
           }
 
-          // We need the full entity to update it in the database.
-          // In a real app, you might fetch it first or have it cached.
-          // For simplicity, we create a new one with updated dates.
-          val habitToUpdate = HabitEntity(
-            id = habit.id,
-            name = habit.name,
-            completedDates = updatedDates.map { it.toEpochSecond() },
-            // Keep other fields as they were, we might need a fetch for that
-            frequency = emptyList(),
-            reminder = 0L,
-            startDate = 0L
-          )
+          val habitToUpdate = currentEntity.copy(completedDates = completedTimestamps)
+
           repository.updateHabit(habitToUpdate)
         }
       }
