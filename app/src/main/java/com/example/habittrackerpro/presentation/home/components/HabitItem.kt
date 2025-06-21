@@ -27,8 +27,8 @@ import java.time.ZonedDateTime
 @Composable
 fun HabitItem(
   habit: Habit,
-  onHabitClick: (Habit) -> Unit,
-  onCompletedClick: (Boolean) -> Unit,
+  onCardClick: (Habit) -> Unit,
+  onCheckboxClick: (Boolean) -> Unit,
   onHabitLongClick: (Habit) -> Unit,
   modifier: Modifier = Modifier
 ) {
@@ -38,22 +38,22 @@ fun HabitItem(
   }
 
   Card(
-    modifier = modifier
-      .fillMaxWidth()
-      .combinedClickable(
-        onClick = { onHabitClick(habit) },
-        onLongClick = { onHabitLongClick(habit) }
-      )
+    modifier = modifier.fillMaxWidth()
   ) {
     Row(
-      modifier = Modifier.padding(16.dp),
+      modifier = Modifier
+        .fillMaxWidth()
+        .combinedClickable(
+          onClick = { onCardClick(habit) },
+          onLongClick = { onHabitLongClick(habit) }
+        )
+        .padding(16.dp),
       verticalAlignment = Alignment.CenterVertically
     ) {
       Text(text = habit.name, modifier = Modifier.weight(1f))
-      // The checkbox is now dynamic
       Checkbox(
         checked = isCompletedToday,
-        onCheckedChange = onCompletedClick
+        onCheckedChange = onCheckboxClick
       )
     }
   }

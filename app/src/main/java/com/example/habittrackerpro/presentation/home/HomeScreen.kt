@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.habittrackerpro.domain.model.Habit
 import com.example.habittrackerpro.presentation.home.components.DateSelector
 import com.example.habittrackerpro.presentation.home.components.HabitItem
 
@@ -30,6 +31,7 @@ import com.example.habittrackerpro.presentation.home.components.HabitItem
  */
 @Composable
 fun HomeScreen(
+  onHabitClick: (Habit) -> Unit, // 接收导航回调
   onNewHabitClick: () -> Unit, // Callback for navigation
   viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -78,9 +80,8 @@ fun HomeScreen(
       items(state.habits) { habit ->
         HabitItem(
           habit = habit,
-          onHabitClick = { viewModel.onEvent(HomeEvent.OnHabitClick(it)) },
-          // Pass the new completion event to the ViewModel
-          onCompletedClick = { isCompleted ->
+          onCardClick = { onHabitClick(habit) },
+          onCheckboxClick = { isCompleted ->
             viewModel.onEvent(HomeEvent.OnCompletedClick(habit, isCompleted))
           },
           onHabitLongClick = { viewModel.onEvent(HomeEvent.OnHabitLongClick(habit)) }
