@@ -28,5 +28,6 @@ sealed class MainScreen(val route: String) {
     // Add the missing constant that DetailViewModel needs
     const val ARG_HABIT_ID = "habitId"
   }
+  object Profile : MainScreen("profile") // <-- ADD THIS LINE
 }
 

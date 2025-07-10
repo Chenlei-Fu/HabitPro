@@ -14,6 +14,8 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -29,10 +31,12 @@ import com.example.habittrackerpro.presentation.home.components.HabitItem
 /**
  * The main screen of the application, displaying the list of habits.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
   onHabitClick: (Habit) -> Unit, // 接收导航回调
   onNewHabitClick: () -> Unit, // Callback for navigation
+  onSettingsClick: () -> Unit, // Add a new callback for settings navigation
   viewModel: HomeViewModel = hiltViewModel()
 ) {
   val state by viewModel.state.collectAsStateWithLifecycle()
@@ -56,6 +60,19 @@ fun HomeScreen(
   }
   Scaffold(
     modifier = Modifier.fillMaxSize(),
+    topBar = {
+      TopAppBar(
+        title = { Text(text = "HabitTracker") },
+        actions = {
+          IconButton(onClick = onSettingsClick) {
+            Icon(
+              imageVector = Icons.Default.Settings,
+              contentDescription = "Settings"
+            )
+          }
+        }
+      )
+    },
     floatingActionButton = {
       FloatingActionButton(onClick = onNewHabitClick) {
         Icon(imageVector = Icons.Default.Add, contentDescription = "Add Habit")
