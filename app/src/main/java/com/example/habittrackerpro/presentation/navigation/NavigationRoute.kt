@@ -1,16 +1,32 @@
 package com.example.habittrackerpro.presentation.navigation
 
 /**
- * Defines the routes for navigation within the app.
+ * Constants for the different navigation graphs in the app.
  */
-sealed class NavigationRoute(val route: String) {
-  object Home : NavigationRoute("home")
-  object AddHabit : NavigationRoute("add_habit")
-  // Define the detail route with an argument for the habit ID
-  object Detail : NavigationRoute("detail/{habitId}") {
-    // A helper function to create the route with a specific ID
-    fun buildRoute(habitId: String) = "detail/$habitId"
-    // Constant for the argument key
+object Graph {
+  const val ROOT = "root_graph"
+  const val AUTH = "auth_graph"
+  const val MAIN = "main_graph"
+}
+
+/**
+ * Defines the routes within the Authentication graph.
+ */
+sealed class AuthScreen(val route: String) {
+  object Login : AuthScreen("login")
+  object Signup : AuthScreen("signup")
+}
+
+/**
+ * Defines the routes within the Main application graph.
+ */
+sealed class MainScreen(val route: String) {
+  object Home : MainScreen("home")
+  object AddHabit : MainScreen("add_habit")
+  object Detail : MainScreen("detail/{habitId}") {
+    fun createRoute(habitId: String) = "detail/$habitId"
+    // Add the missing constant that DetailViewModel needs
     const val ARG_HABIT_ID = "habitId"
   }
 }
+

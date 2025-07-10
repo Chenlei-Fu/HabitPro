@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.habittrackerpro.presentation.navigation.NavigationHost
+import com.example.habittrackerpro.presentation.navigation.RootNavGraph
 import com.example.habittrackerpro.ui.theme.HabitTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
           modifier = Modifier.fillMaxSize(),
           color = MaterialTheme.colorScheme.background
         ) {
-          NavigationHost()
+          RootNavGraph() // Use the new root navigation
         }
       }
     }
